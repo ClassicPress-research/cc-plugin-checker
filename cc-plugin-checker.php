@@ -67,7 +67,7 @@ if ( !class_exists('PCC')) {
 			</style>
 			<br />
 			<h1>Check Your WC/CC Plugin Compatibility</h1>
-			<p>Classic Commerce was forked from WooCommerce 3.5.3.<br />Any plugins that have a rating of "WC requires at least" that is more than 3.5.3 may not work with Classic Commerce.</p>
+			<p>Classic Commerce was forked from WooCommerce 3.5.3.<br />Any plugins with a rating of "WC requires at least" that is more than 3.5.3 may not work with Classic Commerce.</p>
 			<table>
 			<tr>
 			<th>Plugin name</th>
