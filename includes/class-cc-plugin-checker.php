@@ -124,6 +124,10 @@ class CC_Plugin_Checker {
 	 */
 	public function pcc_plugin_settings_link( $actions ) {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
 		$url = '/wp-admin/admin.php?page=pcc_check';
 		$link = '<a href="' . $url . '" target="_blank">' . esc_html__( 'Check Now', 'cc-plugin-checker' ) . '</a>';
 		$actions[] = $link;
