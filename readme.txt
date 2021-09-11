@@ -3,7 +3,7 @@ Contributors: Alan Coggins, bedas
 Tags: classic commerce, compatibility
 Requires at least: 1.0.0
 Tested up to: 1.3.0
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,9 @@ Any plugins with declaring "WC requires at least" above 3.5.3 may not work with 
 This plugin helps you scan the installed Plugins on your website, to spot them easily.
 
 == Changelog ==
+
+= 1.1.0 =
+* Add WC to required plugins
 
 = 1.0.1 =
 * Add cap check for plugin links

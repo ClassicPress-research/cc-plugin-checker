@@ -6,7 +6,7 @@
  *
  * Plugin Name: CC Plugin Checker
  * Description: Check your WC plugins are compatible with Classic Commerce before migrating your site
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Alan Coggins, bedas
  * Author URI: https://simplycomputing.com.au
  **/
@@ -21,7 +21,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CC_PLUGIN_CHECKER_VERSION', '1.0.1' );
+define( 'CC_PLUGIN_CHECKER_VERSION', '1.1.0' );
 
 /**
  * The code that runs during plugin activation.

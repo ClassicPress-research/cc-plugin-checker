@@ -74,9 +74,15 @@ class CC_Plugin_Checker_Activator {
 			}
 		}
 
-		if ( ! is_plugin_active( 'classic-commerce/classic-commerce.php' ) ) {
+		$active_plugins = get_option( 'active_plugins' );
+		$required_plugins = array(
+			'classic-commerce/classic-commerce.php',
+			'woocommerce/woocommerce.php',
+		);
+
+		if ( empty( array_intersect( $required_plugins, $active_plugins ) ) ) {
 			// Stop activation redirect and show error.
-			wp_die( 'Sorry, but this plugin requires the Classic Commerce Plugin to be installed and active. <br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">&laquo; Return to Plugins</a>' );
+			wp_die( 'Sorry, but this plugin requires either the Classic Commerce Plugin or WooCommerce Plugin to be installed and active. <br><a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">&laquo; Return to Plugins</a>' );
 		}
 
 	}
