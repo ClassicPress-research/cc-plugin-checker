@@ -38,7 +38,7 @@ class CC_Plugin_Checker_Deactivator {
 	 * @access   private
 	 * @var      string    $plugin    The $_REQUEST['plugin'] value during plugin activation.
 	 */
-	private static $plugin = 'cc-plugin-checker/cc-plugin-checker.php';
+	private static $plugin = CC_PLUGIN_CHECKER_BASE_NAME;
 
 	/**
 	 * The $_REQUEST['action'] during plugin activation.
