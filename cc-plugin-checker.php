@@ -1,116 +1,91 @@
 <?php
 /**
-* Plugin Name: CC Plugin Checker
-* Description: Check your WC plugins are compatible with Classic Commerce before migrating your site
-* Version: 0.0.1
-* Author: Alan Coggins
-* Author URI: https://simplycomputing.com.au
-**/
+ * The plugin bootstrap file
+ *
+ * @package CC_Plugin_Checker
+ *
+ * Plugin Name: CC Plugin Checker
+ * Description: Check your WC plugins are compatible with Classic Commerce before migrating your site
+ * Version: 1.2.0
+ * Author: Alan Coggins, bedas
+ * Author URI: https://simplycomputing.com.au
+ **/
 
-// Exit if accessed directly.
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
-add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'pcc_plugin_settings_link', 10, 5 );
+/**
+ * Current plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'CC_PLUGIN_CHECKER_VERSION', '1.2.0' );
 
-function pcc_plugin_settings_link( $links )
-{
-    $url = '/wp-admin/admin.php?page=PCC_Check';
+/**
+ * Define the Plugin basename
+ */
+define( 'CC_PLUGIN_CHECKER_BASE_NAME', plugin_basename( __FILE__ ) );
 
-    $_link = '<a href="'.$url.'" target="_blank">' . __( 'CHECK NOW', 'domain' ) . '</a>';
-
-    $links[] = $_link;
-
-    return $links;
+/**
+ * The code that runs during plugin activation.
+ *
+ * This action is documented in includes/class-cc-plugin-checker-activator.php
+ * Full security checks are performed inside the class.
+ */
+function cc_plugin_checker_activate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-cc-plugin-checker-activator.php';
+	CC_Plugin_Checker_Activator::activate();
 }
 
-if ( !class_exists('PCC')) {
-
-	Class PCC {
-
-		public  function __construct() {
-		//Hook to add admin menu 
-			add_action("admin_menu", array($this,"PCC_Menu_Pages"));
-		}
-
-		//Define 'PCC_Menu_Pages'
-		function PCC_Menu_Pages() {
-			add_menu_page( 'CC Plugin Check', 'CC Plugin Check', 'manage_options', 'PCC_Check', array(__CLASS__,'PCC_Check'), 'dashicons-yes', 90);
-		}
-
-		//Define function
-		public static function PCC_Check() {
-
-			echo '<style>
-			td, th {
-			border: 1px solid #ddd;
-			padding: 6px;
-			font-size: 16px;
-			}
-
-			th {
-			padding-top: 8px;
-			padding-bottom: 8px;
-			text-align: left;
-			background-color: #666;
-			color: white;
-			}
-
-			p {
-				font-size: 16px;
-			}
-			span {
-				color: #b2b2b2;
-			}
-			</style>
-			<br />
-			<h1>Check Your WC/CC Plugin Compatibility</h1>
-			<p>Classic Commerce was forked from WooCommerce 3.5.3.<br />Any plugins with a rating of "WC requires at least" that is more than 3.5.3 may not work with Classic Commerce.</p>
-			<table>
-			<tr>
-			<th>Plugin name</th>
-			<th>Current version</th>
-			<th>WC requires at least</th>
-			<th>WC tested up to</th>
-			</tr>';
-
-			$plugin=get_plugins();
-
-				foreach($plugin as $key => $plug) {
-
-					$PluginName = $plug['Name'];
-					$PluginSlug = $plug['TextDomain'];
-					$PluginCurrentVersion = $plug['Version'];
-					$PluginPath = WP_PLUGIN_DIR . '/' . $key;
-
-					$PluginDetails = get_plugin_data($PluginPath);
-
-					$RequiresAtLeast = $PluginDetails['WC requires at least'];
-					if ($RequiresAtLeast === '') {
-						$RequiresAtLeast = '<span>No WC tag</span>';
-					}
-
-					$TestedUpTo = $PluginDetails['WC tested up to'];
-					if ($TestedUpTo === '') {
-						$TestedUpTo = '<span>No WC tag</span>';
-					}
-
-					echo '<tbody>
-								<tr>
-								<td>'.$PluginName.'</td>
-								<td>'.$PluginCurrentVersion.'</td>
-								<td>'.$RequiresAtLeast.'</td>
-								<td>'.$TestedUpTo.'</td>
-								</tr>';
-			}
-
-					echo '</tbody>
-								</table>';
-
-		}
-	}
+/**
+ * The code that runs during plugin deactivation.
+ *
+ * This action is documented in includes/class-cc-plugin-checker-deactivator.php
+ * Full security checks are performed inside the class.
+ */
+function cc_plugin_checker_deactivate() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-cc-plugin-checker-deactivator.php';
+	CC_Plugin_Checker_Deactivator::deactivate();
 }
 
-new PCC();
+/**
+ * The code that runs during plugin uninstall.
+ *
+ * This action is documented in includes/class-cc-plugin-checker-uninstall.php
+ * Full security checks are performed inside the class.
+ */
+function cc_plugin_checker_uninstall() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-cc-plugin-checker-uninstall.php';
+	CC_Plugin_Checker_Uninstall::uninstall();
+}
+
+register_activation_hook( __FILE__, 'cc_plugin_checker_activate' );
+register_deactivation_hook( __FILE__, 'cc_plugin_checker_deactivate' );
+register_uninstall_hook( __FILE__, 'cc_plugin_checker_uninstall' );
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-cc-plugin-checker.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * Generally you will want to hook this function, instead of callign it globally.
+ * However since the purpose of your plugin is not known until you write it, we include the function globally.
+ *
+ * @since    1.0.0
+ */
+function cc_plugin_checker_run() {
+
+	new CC_Plugin_Checker();
+
+}
+add_action( 'init', 'cc_plugin_checker_run' );
