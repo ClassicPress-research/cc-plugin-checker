@@ -165,7 +165,7 @@ class CC_Plugin_Checker {
 			p {
 				font-size: 16px;
 			}
-			span {
+			span.not_exists {
 				color: #b2b2b2;
 			}
 			</style>
@@ -189,13 +189,15 @@ class CC_Plugin_Checker {
 			$plugin_version = isset( $plugin_details['Version'] ) && ! empty( $plugin_details['Version'] ) ? $plugin_details['Version'] : __( 'Unknown Version', 'cc-plugin-checker' );
 			$wc_requires_least = isset( $plugin_details['WC requires at least'] ) && ! empty( $plugin_details['WC requires at least'] ) ? $plugin_details['WC requires at least'] : __( 'No WC Tag', 'cc-plugin-checker' );
 			$wc_tested_to = isset( $plugin_details['WC tested up to'] ) && ! empty( $plugin_details['WC tested up to'] ) ? $plugin_details['WC tested up to'] : __( 'No WC Tag', 'cc-plugin-checker' );
+			$span_requires = isset( $plugin_details['WC requires at least'] ) && ! empty( $plugin_details['WC requires at least'] ) ? 'exists' : 'not_exists';
+			$span_tested = isset( $plugin_details['WC tested up to'] ) && ! empty( $plugin_details['WC tested up to'] ) ? 'exists' : 'not_exists';
 
 			echo '<tbody>
 				<tr>
 				<td>' . esc_html( $plugin_name ) . '</td>
 				<td>' . esc_html( $plugin_version ) . '</td>
-				<td><span>' . esc_html( $wc_requires_least ) . '</span></td>
-				<td><span>' . esc_html( $wc_tested_to ) . '</span></td>
+				<td><span class="' . esc_attr( $span_requires ) . '">' . esc_html( $wc_requires_least ) . '</span></td>
+				<td><span class="' . esc_attr( $span_tested ) . '">' . esc_html( $wc_tested_to ) . '</span></td>
 				</tr>';
 		}
 

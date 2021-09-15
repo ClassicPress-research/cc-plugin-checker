@@ -19,6 +19,7 @@ This plugin helps you scan the installed Plugins on your website, to spot them e
 
 = 1.2.0 =
 * Add proper uninstall hook
+* Make sure only non-existing versions are greyed out
 
 = 1.1.1 =
 * Fix issue when disabling/deleting/activating manually renamed plugin
