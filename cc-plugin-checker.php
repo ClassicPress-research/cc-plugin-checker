@@ -6,7 +6,7 @@
  *
  * Plugin Name: CC Plugin Checker
  * Description: Check your WC plugins are compatible with Classic Commerce before migrating your site
- * Version: 1.1.1
+ * Version: 1.2.0
  * Author: Alan Coggins, bedas
  * Author URI: https://simplycomputing.com.au
  **/
@@ -21,7 +21,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CC_PLUGIN_CHECKER_VERSION', '1.1.1' );
+define( 'CC_PLUGIN_CHECKER_VERSION', '1.2.0' );
 
 /**
  * Define the Plugin basename
@@ -50,8 +50,20 @@ function cc_plugin_checker_deactivate() {
 	CC_Plugin_Checker_Deactivator::deactivate();
 }
 
+/**
+ * The code that runs during plugin uninstall.
+ *
+ * This action is documented in includes/class-cc-plugin-checker-uninstall.php
+ * Full security checks are performed inside the class.
+ */
+function cc_plugin_checker_uninstall() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-cc-plugin-checker-uninstall.php';
+	CC_Plugin_Checker_Uninstall::uninstall();
+}
+
 register_activation_hook( __FILE__, 'cc_plugin_checker_activate' );
 register_deactivation_hook( __FILE__, 'cc_plugin_checker_deactivate' );
+register_uninstall_hook( __FILE__, 'cc_plugin_checker_uninstall' );
 
 /**
  * The core plugin class that is used to define internationalization,
